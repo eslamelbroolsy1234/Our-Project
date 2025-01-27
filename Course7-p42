@@ -1,0 +1,94 @@
+#include <iostream>
+#include <string>
+#include <cstdlib> 
+#include <vector>
+
+using namespace std;
+
+vector <string> Split(string S1, string delim)
+{
+    vector  <string> VEacheWorld;
+
+    short pos = 0;
+    string sWorld;
+
+    while ((pos = S1.find(delim)) != std::string::npos)
+    {
+        sWorld = S1.substr(0, pos);
+
+        if (sWorld != "")
+        {
+            VEacheWorld.push_back(sWorld);
+        }
+
+        S1.erase(0, pos + delim.length());
+    }
+
+    if (S1 != "")
+    {
+        VEacheWorld.push_back(S1);
+    }
+
+    return VEacheWorld;
+
+}
+
+string JoinVector(vector <string>& Vstrings, string delim)
+{
+    string JoinName = "";
+
+    for (string& i : Vstrings)
+    {
+        JoinName = JoinName + i + delim;
+    }
+
+    return JoinName.substr(0, JoinName.length() - delim.length());
+}
+
+string ReplaceWordsInString(string S1, string W1, string W2)
+{
+    vector<string> VEachWord;
+    VEachWord = Split(S1, " ");
+
+    for (size_t i = 0; i < VEachWord.size(); i++)
+    {
+        if (VEachWord[i] == W1)
+        {
+            VEachWord[i] = W2;
+        }
+    }
+
+    S1 = JoinVector(VEachWord, " ");
+    return S1;
+}
+
+string ReplaceWordsInStringUsingBuildInFunction(string S1, string W1, string W2)
+{
+    short pos = S1.find(W1);
+
+    while (pos != std::string::npos)
+    {
+        S1 = S1.replace(pos, W1.length(), W2);
+        pos = S1.find(W1); 
+    }
+    return S1;
+}
+
+int main()
+{
+	string S1 = "Welcome to Jordan , Jordan is a nice country";
+    string StringToReblace = "Jordan";
+    string Reblace = "USA";
+
+	cout << "Original String: \n" << S1; 
+
+    cout << "\n\nString After Replace Using Vector Functions: \n";
+    cout << ReplaceWordsInString(S1, "Jordan", "USA");
+    
+    cout << "\n\nString After Replace Using BulidIn Function: \n";
+    cout << ReplaceWordsInStringUsingBuildInFunction(S1, StringToReblace, Reblace) << endl;
+
+
+    return 0;
+	system("pause>0"); 
+}
